@@ -41,7 +41,7 @@ namespace Email.UserRepositoryService
         }
         public async Task<User?> GetAccountByEmailAdress(string emailAdress)
         {
-            return await database.Users.SingleOrDefaultAsync(acc=>acc.EmailAddress.Equals(emailAdress));
+            return await database.Users.Include(x=>x.PersonalInfo).SingleOrDefaultAsync(acc=>acc.EmailAddress.Equals(emailAdress));
         }
         internal Task SendEmail(Mail email)
         {

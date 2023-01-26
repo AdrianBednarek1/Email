@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string EmailAddress { get; set; }
         public string Password { get; set; }
-        public Person PersonalInfo { get; set; }
+        public Person PersonalInfo { get; set; } = new Person();
         public ICollection<Mail> SentMails { get; set; } 
         public ICollection<Mail> ReceivedMails { get; set; }
     }

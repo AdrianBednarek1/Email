@@ -71,8 +71,9 @@ namespace Email.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserAccountId")
                         .HasColumnType("int");
@@ -82,7 +83,7 @@ namespace Email.Migrations
                     b.HasIndex("UserAccountId")
                         .IsUnique();
 
-                    b.ToTable("Person");
+                    b.ToTable("People");
                 });
 
             modelBuilder.Entity("Email.Entity.User", b =>
@@ -108,13 +109,13 @@ namespace Email.Migrations
 
             modelBuilder.Entity("MailUser", b =>
                 {
-                    b.Property<int>("ReceivedEmailsId")
+                    b.Property<int>("ReceivedMailsId")
                         .HasColumnType("int");
 
                     b.Property<int>("ReceiversId")
                         .HasColumnType("int");
 
-                    b.HasKey("ReceivedEmailsId", "ReceiversId");
+                    b.HasKey("ReceivedMailsId", "ReceiversId");
 
                     b.HasIndex("ReceiversId");
 
@@ -147,7 +148,7 @@ namespace Email.Migrations
                 {
                     b.HasOne("Email.Entity.Mail", null)
                         .WithMany()
-                        .HasForeignKey("ReceivedEmailsId")
+                        .HasForeignKey("ReceivedMailsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
