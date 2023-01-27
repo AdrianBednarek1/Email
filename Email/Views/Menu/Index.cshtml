@@ -1,7 +1,15 @@
-﻿
+﻿@model Email.Models.LoggedInModel
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
+<a asp-action="SignOut">Sign Out</a>
+<p>@Model.FirstName @Model.LastName</p>
+<p>@Model.EmailAddress</p>
+<a asp-action="SendMail">Send Mail</a>
+@foreach (var item in Model.ReceivedMails)
+{
+        <p>@item.Subject</p>
+        <p>@item.Sender</p>
+        <p>@item.Message</p>
+        <p>@item.DateTime_</p>
+}

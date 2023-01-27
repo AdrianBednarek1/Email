@@ -16,7 +16,7 @@ namespace Email.UserRepositoryService
         {
             return await database.Users.ToListAsync();
         }
-        public async Task CreateAccount(User user)
+        public async Task CreateUser(User user)
         {
             if (user == null) return;
             await database.Users.AddAsync(user);
@@ -41,7 +41,7 @@ namespace Email.UserRepositoryService
         }
         public async Task<User?> GetAccountByEmailAdress(string emailAdress)
         {
-            return await database.Users.Include(x=>x.PersonalInfo).SingleOrDefaultAsync(acc=>acc.EmailAddress.Equals(emailAdress));
+            return await database.Users.Include(x=>x.ReceivedMails).Include(x=>x.SentMails).Include(x=>x.PersonalInfo).SingleOrDefaultAsync(user=>user.EmailAddress.Equals(emailAdress));
         }
         internal Task SendEmail(Mail email)
         {

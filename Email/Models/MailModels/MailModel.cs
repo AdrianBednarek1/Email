@@ -9,7 +9,6 @@ namespace Email.Models.MailModels
         public string? Message { get; set; }
         public EmailCategories EmailCategory { get; set; }
         public DateTime DateTime_ { get; set; }
-        public int SenderId { get; set; }
         public string Sender { get; set; }
         public List<string> Receivers { get; set; } = new List<string>();
         public MailModel(Mail mail)

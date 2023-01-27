@@ -8,7 +8,9 @@ namespace Email.DatabaseModel
         public DbSet<User> Users { get; set; }
         public DbSet<Mail> Emails { get; set; }
         public DbSet<Person> People { get; set; }
-        public Db(DbContextOptions<Db> db):base(db){}
+        public Db(DbContextOptions<Db> db):base(db)
+        {
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasMany(x => x.SentMails).WithOne(x => x.Sender).HasForeignKey(x=>x.SenderId).OnDelete(DeleteBehavior.NoAction);

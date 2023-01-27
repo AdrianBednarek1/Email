@@ -19,7 +19,7 @@ namespace Email.UserRepositoryService
             bool emailAddressExists = await userRepository.GetAccountByEmailAdress(registerModel.EmailAddress) != null;
             if (emailAddressExists) return false;
             User account = registerModel.GetUserEntity();
-            await userRepository.CreateAccount(account);
+            await userRepository.CreateUser(account);
             return true;
         }
         public async Task<ClaimsPrincipal> Login(LoginModel loginModel)
@@ -29,7 +29,7 @@ namespace Email.UserRepositoryService
             if (incorrectInput) return null;
             return authentication.GetLoginClaim(acc);
         }
-        public async Task<LoggedInModel> GetAccByEmail(string? email)
+        public async Task<LoggedInModel> GetUserByEmail(string? email)
         {
             User user = await userRepository.GetAccountByEmailAdress(email);
             LoggedInModel loggedInModel = user == null ? null : new LoggedInModel(user);
