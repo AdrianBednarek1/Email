@@ -41,7 +41,6 @@ namespace Email.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMail(MailModel? mailModel)
         {
-
             return View();
         }
     }
