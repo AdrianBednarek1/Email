@@ -1,5 +1,6 @@
 ﻿using Email.Authentication;
 using Email.Entity;
+using Email.MailRepositoryService;
 using Email.Models;
 using Email.Models.MailModels;
 using System.Security.Claims;
@@ -9,14 +10,16 @@ namespace Email.UserRepositoryService
     public class UserService
     {
         private UserRepository userRepository;
+        private MailService mailService;
         public HttpAuthentication authentication = new HttpAuthentication();
-        public UserService(UserRepository repository)
+        public UserService(UserRepository repository, MailService mailService_)
         {
             userRepository = repository;
+            mailService = mailService_;
         }
         public async Task<bool> Create(RegisterModel registerModel)
         {
-            bool emailAddressExists = await userRepository.GetAccountByEmailAdress(registerModel.EmailAddress) != null;
+            bool emailAddressExists = await userRepository.GetUserByEmail(registerModel.EmailAddress) != null;
             if (emailAddressExists) return false;
             User account = registerModel.GetUserEntity();
             await userRepository.CreateUser(account);
@@ -24,45 +27,59 @@ namespace Email.UserRepositoryService
         }
         public async Task<ClaimsPrincipal> Login(LoginModel loginModel)
         {
-            User? acc = await userRepository.GetAccountByEmailAdress(loginModel.EmailAddress);
+            User? acc = await userRepository.GetUserByEmail(loginModel.EmailAddress);
             bool incorrectInput = !acc?.Password.Equals(loginModel.Password) ?? true;
             if (incorrectInput) return null;
             return authentication.GetLoginClaim(acc);
         }
-        public async Task<LoggedInModel> GetUserByEmail(string? email)
+        public async Task<LoggedInModel> GetUserByEmail(string email)
         {
-            User user = await userRepository.GetAccountByEmailAdress(email);
-            LoggedInModel loggedInModel = user == null ? null : new LoggedInModel(user);
+            User user = await userRepository.GetUserByEmail(email);
+            bool userDoesntExists = user == null;
+            LoggedInModel loggedInModel = userDoesntExists ? null : new LoggedInModel(user);
             return loggedInModel;
         }
-        public async Task SendEmail(MailModel modelEmail)
+        public async Task<bool> SendEmail(SendMailModel modelEmail)
         {
-            Mail email = await ModelToEntity(modelEmail);
-            List<User> accounts = new List<User>();
-            foreach (var item in modelEmail.Receivers)
-            {
-                User account = await userRepository.GetAccountByEmailAdress(item);
-                email.Receivers.Add(account);
-            }
-            await userRepository.SendEmail(email);
+            Mail mail = await ModelToEntity(modelEmail);
+            bool mailSent = await mailService.CreateMail(mail);
+            if (!mailSent) return false;
+            return true;
         }
-        private async Task<Mail> ModelToEntity(MailModel modelEmail)
+        public async Task<bool> CheckEmailValidations(List<string> list)
         {
-            User sender = await userRepository.GetAccountByEmailAdress(modelEmail.Sender);
-            List<User> receivers = new List<User>();
-            foreach (var item in modelEmail.Receivers)
+            foreach (var item in list)
             {
-                User receiver = await userRepository.GetAccountByEmailAdress(item);
+                LoggedInModel? user = await GetUserByEmail(item);
+                bool mailIsNotValid = user == null;
+                if(mailIsNotValid) return false;
+            }
+            return true;
+        }   
+        public async Task<User> ModelToEntity(LoggedInModel model)
+        {
+            bool modelIsEmpty = model == null;
+            if (modelIsEmpty) return null;
+            User user = await userRepository.GetUserByEmail(model.EmailAddress);
+            return user;
+        }
+        private async Task<Mail> ModelToEntity(SendMailModel mailModel)
+        {
+            User sender = await userRepository.GetUserByEmail(mailModel.Sender);
+            List<User> receivers = new List<User>();
+            foreach (var item in mailModel.GetListOfReceivers())
+            {
+                User receiver = await userRepository.GetUserByEmail(item);
                 receivers.Add(receiver);
             }
             Mail email = new Mail()
             {
-                DateTime_ = modelEmail.DateTime_,
-                EmailCategory = modelEmail.EmailCategory,
-                Message = modelEmail.Message,
+                DateTime_ = mailModel.DateTime_,
+                EmailCategory = mailModel.EmailCategory,
+                Message = mailModel.Message,
                 Sender = sender,
-                Subject = modelEmail.Subject,
-                Receivers = receivers
+                Subject = mailModel.Subject,
+                Receivers = new List<User>(receivers)
             };
             return email;
         }

@@ -38,6 +38,7 @@ namespace Email.Controllers
             if (!ModelState.IsValid) return View();
             ClaimsPrincipal userData = await userService.Login(loginModel);
             bool incorrectInput = userData == null;
+            ViewData["InputValidation"] = incorrectInput ? "Wrong Password or Email" : null;
             if (incorrectInput) return View();
             await HttpContext.SignInAsync(userData);
             return Redirect("/Menu/Index");

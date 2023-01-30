@@ -8,7 +8,7 @@ namespace Email.Models
         [Required]
         public string EmailAddress
         {
-            get { return emailAddress + $"@gmail.com"; }
+            get { return String.IsNullOrEmpty(emailAddress) ? null : emailAddress + $"@gmail.com"; }
             set { emailAddress = value; }
         }
         [Required]

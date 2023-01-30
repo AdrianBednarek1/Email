@@ -1,22 +1,37 @@
 ﻿using Email.Entity;
 using Email.Models.MailModels;
+using Microsoft.Build.Framework;
+using Newtonsoft.Json.Serialization;
+using System.ComponentModel.DataAnnotations;
 
 namespace Email.Models
 {
     public class RegisterModel
     {
         public int Id { get; set; }
+        [MinLength(3)]
         public string FirstName { get; set; }
+        [MinLength(3)]
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
-        public string PhoneNumber { get; set; }
-        private string emailAddress;
-        public string EmailAddress
+
+        private int age;
+        [Range(10,70,ErrorMessage = "Your age must be between 10 and 70")]
+        public int Age
         {
-            get { return emailAddress + $"@gmail.com"; }
+            get { return age; }
+            set { age = DateTime.Now.Year - BirthDate.Year; }
+        }
+		public string? PhoneNumber { get; set; }
+        private string emailAddress;
+        [MinLength(1)]
+		public string EmailAddress
+        {
+            get { return String.IsNullOrEmpty(emailAddress) ? null : emailAddress + $"@gmail.com"; }
             set { emailAddress = value; }
         }
-        public string Password { get; set; }
+        [MinLength(6)]
+		public string Password { get; set; }
         public RegisterModel() { }
         public User GetUserEntity()
         {
@@ -24,7 +39,7 @@ namespace Email.Models
             {
                 FirstName = FirstName,
                 LastName = LastName,
-                BirthDate= BirthDate,
+                BirthDate= BirthDate.ToString("yyyy/MM/dd"),
                 PhoneNumber =PhoneNumber
             };
             User account = new User()

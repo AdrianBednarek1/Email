@@ -13,7 +13,7 @@
         public int Id { get; set; }
         public string? Subject { get; set; }
         public string? Message { get; set; }
-        public DateTime DateTime_ { get; set; }
+        public string DateTime_ { get; set; }
         public EmailCategories EmailCategory { get; set; }
         public int SenderId { get; set; }
         public User Sender { get; set; }

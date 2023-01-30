@@ -39,9 +39,12 @@ namespace Email.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SendMail(MailModel? mailModel)
+        public async Task<IActionResult> SendMail(SendMailModel? mailModel)
         {
-            return View();
+            if (!ModelState.IsValid) return View();
+            bool mailIsSent =  await userService.SendEmail(mailModel);
+            if(!mailIsSent) return View();
+            return Redirect("/Menu/Index");
         }
     }
 }

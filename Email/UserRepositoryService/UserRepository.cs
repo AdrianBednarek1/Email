@@ -39,13 +39,9 @@ namespace Email.UserRepositoryService
         {
             return await database.Users.FindAsync(id);
         }
-        public async Task<User?> GetAccountByEmailAdress(string emailAdress)
+        public async Task<User?> GetUserByEmail(string emailAdress)
         {
-            return await database.Users.Include(x=>x.ReceivedMails).Include(x=>x.SentMails).Include(x=>x.PersonalInfo).SingleOrDefaultAsync(user=>user.EmailAddress.Equals(emailAdress));
+            return await database.Users.Include(x => x.ReceivedMails).ThenInclude(x=>x.Sender).Include(x => x.SentMails).ThenInclude(x=>x.Receivers).Include(x => x.PersonalInfo).SingleOrDefaultAsync(user => user.EmailAddress.Equals(emailAdress));
         }
-        internal Task SendEmail(Mail email)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    }   
 }

@@ -1,4 +1,5 @@
 using Email.DatabaseModel;
+using Email.MailRepositoryService;
 using Email.UserRepositoryService;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddDbContext<Db>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("EmailDbModel")), ServiceLifetime.Transient);
 builder.Services.AddTransient<UserRepository>();
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<MailRepository>();
+builder.Services.AddTransient<MailService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

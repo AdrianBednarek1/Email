@@ -16,6 +16,10 @@
 			<label asp-for="Password" class="control-label"></label>
 			<input asp-for="Password" class="form-control" />
 			<span asp-validation-for="Password" class="text-danger"></span>
+			@if (ViewData["InputValidation"] != null)
+			{
+				<label class="text-danger">@ViewData["InputValidation"]</label>
+			}
 		</div>
 		<div class="form-group">
 			<input  type="submit" value="Login" class="btn btn-primary"/>

@@ -26,7 +26,7 @@
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="DateTime_" value="@DateTime.Now" type="hidden" class="form-control" />
+                <input asp-for="DateTime_" value="@DateTime.Now.ToString("yyyy/MM/dd HH:mm")" type="hidden" class="form-control" />
             </div>
             <div class="form-group">
                 <input asp-for="Sender" type="hidden" value="@User.FindFirst(ClaimTypes.Email).Value" class="form-control" />
