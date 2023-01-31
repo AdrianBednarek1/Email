@@ -1,7 +1,4 @@
 ﻿using Email.Entity;
-using Email.Models;
-using Email.Models.MailModels;
-using Email.UserRepositoryService;
 
 namespace Email.MailRepositoryService
 {

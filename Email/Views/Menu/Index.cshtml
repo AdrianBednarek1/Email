@@ -6,10 +6,20 @@
 <p>@Model.FirstName @Model.LastName</p>
 <p>@Model.EmailAddress</p>
 <a asp-action="SendMail">Send Mail</a>
-@foreach (var item in Model.ReceivedMails)
-{
-        <p>@item.Subject</p>
-        <p>@item.Sender</p>
-        <p>@item.Message</p>
-        <p>@item.DateTime_</p>
-}
+<table class="table" style="width:100%">
+    @foreach (var item in Model.ReceivedMails)
+    {
+        <tr>
+            <td>
+                <p>@item.Name  </p>
+            </td> 
+            <td>
+                <p>@item.Subject - @item.Message</p>
+            </td>
+                <td style="width:20%">
+                <p>@item.DateTime_</p>
+            </td>
+        </tr>         
+    }
+</table>
+

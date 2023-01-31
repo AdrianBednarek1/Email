@@ -15,8 +15,8 @@ namespace Email.Models
             set { emailAddress = value; }
         }
         public string Password { get; set; }
-        public List<MailModel> ReceivedMails { get; set; } = new List<MailModel>();
-        public List<MailModel> SentMails { get; set; } = new List<MailModel>();
+        public List<ListOfMailsModel> ReceivedMails { get; set; } = new List<ListOfMailsModel>();
+        public List<ListOfMailsModel> SentMails { get; set; } = new List<ListOfMailsModel>();
         public LoggedInModel(User user)
         {
             Id = user.Id;
@@ -26,8 +26,8 @@ namespace Email.Models
             Password = user.Password;
             List<Mail> receivedMails = new List<Mail>(user.ReceivedMails);
             List<Mail> sentMails = new List<Mail>(user.SentMails);
-            receivedMails.ForEach(item => ReceivedMails.Add(new MailModel(item)));
-            sentMails.ForEach(item => SentMails.Add(new MailModel(item)));
+            receivedMails.ForEach(item => ReceivedMails.Add(new ListOfMailsModel(item)));
+            sentMails.ForEach(item => SentMails.Add(new ListOfMailsModel(item)));
         }
         public LoggedInModel() { }
     }
