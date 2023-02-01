@@ -41,6 +41,8 @@ namespace Email.UserRepositoryService
         }
         public async Task<bool> SendEmail(SendMailModel modelEmail)
         {
+            bool mailsAreValid = await CheckEmailValidations(modelEmail.GetListOfReceivers());
+            if (!mailsAreValid) return false;
             Mail mail = await ModelToEntity(modelEmail);
             bool mailSent = await mailService.CreateMail(mail);
             if (!mailSent) return false;

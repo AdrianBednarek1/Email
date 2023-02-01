@@ -43,6 +43,7 @@ namespace Email.Controllers
         {
             if (!ModelState.IsValid) return View();
             bool mailIsSent =  await userService.SendEmail(mailModel);
+            ViewData["EmailValidation"] = mailIsSent ? null : "Incorrect email input!";
             if(!mailIsSent) return View();
             return Redirect("/Menu/Index");
         }
