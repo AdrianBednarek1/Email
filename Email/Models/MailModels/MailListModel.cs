@@ -12,6 +12,7 @@ namespace Email.Models.MailModels
         public EmailCategories EmailCategory { get; set; }
         public string DateTime_ { get; set; }
         public bool Seen { get; set; }
+<<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
         private const int allowedStringSize = 105;
         public MailListModel(Mail mail)
         {
@@ -20,10 +21,19 @@ namespace Email.Models.MailModels
             Subject = FixedSize(mail.Subject, allowedStringSize);
             int allowedMessageSize = allowedStringSize - mail.Subject.Count();
             Message = FixedSize(mail.Message, allowedMessageSize);
+=======
+        public ListOfMailsModel(Mail mail)
+        {
+            Id= mail.Id;
+            Name = mail.Sender.PersonalInfo.FirstName;
+            Subject = mail.Subject;
+            Message = mail.Message;
+>>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
             EmailCategory = mail.EmailCategory;
             DateTime_ = mail.DateTime_;
             Seen= mail.Seen;
         }
+<<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
 
         private string? FixedSize(string? message, int allowedSize)
         {
@@ -34,6 +44,9 @@ namespace Email.Models.MailModels
         }
 
         public MailListModel(){}
+=======
+        public ListOfMailsModel(){}
+>>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
     }
     
 }
