@@ -1,10 +1,11 @@
-﻿@model Email.Models.LoggedInModel
+﻿@using System.Security.Claims;
+@model Email.Models.UserModel
 @{
     ViewData["Title"] = "Index";
 }
 <a asp-action="SignOut">Sign Out</a>
-<p>@Model.FirstName @Model.LastName</p>
-<p>@Model.EmailAddress</p>
+<p>@User.FindFirst(ClaimTypes.Name)?.Value @User.FindFirst(ClaimTypes.Surname)?.Value</p>
+<p>@User.FindFirst(ClaimTypes.Email)?.Value</p>
 <a asp-action="SendMail">Send Mail</a>
 <table class="table" style="width:100%">
     @foreach (var item in Model.ReceivedMails)
@@ -16,7 +17,10 @@
             <td>
                 <p>@item.Subject - @item.Message</p>
             </td>
-                <td style="width:20%">
+            <td>
+                <a asp-action="DeleteMail" asp-route-mailId="@item.Id">Delete</a>
+            </td>
+            <td style="width:20%">
                 <p>@item.DateTime_</p>
             </td>
         </tr>         

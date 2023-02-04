@@ -16,6 +16,9 @@ namespace Email.MailRepositoryService
             await mailRepository.CreateMail(mail);
             return true;
         }
-        
+        public async Task<Mail> GetMailById(int Id)
+        {
+            return await mailRepository.GetMailById(Id);
+        }    
     }
 }

@@ -12,7 +12,7 @@ namespace Email.Controllers
     public class MenuController : Controller
     {
         private readonly UserService userService;
-        private LoggedInModel loggedUser;
+        private UserModel loggedUser;
         private string userEmail => User?.FindFirstValue(ClaimTypes.Email) ?? "";
         public MenuController(UserService userService_)
         {
@@ -26,6 +26,13 @@ namespace Email.Controllers
         private async Task Refresh()
         {
             loggedUser = await userService.GetUserByEmail(userEmail);
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteMail(int mailId)
+        {
+            DeleteMailModel deleteMail = new DeleteMailModel(userEmail, mailId);
+            await userService.DeleteMailFromUser(deleteMail);
+            return Redirect("/Menu/Index");
         }
         [HttpGet]
         public async Task<IActionResult> SignOut()

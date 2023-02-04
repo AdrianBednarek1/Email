@@ -18,8 +18,8 @@ namespace Email.Models.MailModels
             Message = mail.Message;
             EmailCategory = mail.EmailCategory;
             DateTime_= mail.DateTime_;
-            Sender = mail.Sender.EmailAddress;
-            Receivers.AddRange(mail.Receivers.Select(item => item.EmailAddress));
+            Sender = mail.Sender;
+            Receivers.AddRange(mail.Receivers);
         }
         public MailModel() { }
     }

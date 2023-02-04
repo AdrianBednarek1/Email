@@ -24,7 +24,7 @@ namespace Email.UserRepositoryService
         }
         public async Task Delete(User? user)
         {
-            if (user == null) return;
+            if (user == null) return; 
             database.Users.Remove(user);
             await database.SaveChangesAsync();
         }
@@ -41,7 +41,17 @@ namespace Email.UserRepositoryService
         }
         public async Task<User?> GetUserByEmail(string emailAdress)
         {
-            return await database.Users.Include(x => x.ReceivedMails).ThenInclude(x=>x.Sender).Include(x => x.SentMails).ThenInclude(x=>x.Receivers).Include(x => x.PersonalInfo).SingleOrDefaultAsync(user => user.EmailAddress.Equals(emailAdress));
+            return await database.Users
+                .Include(x => x.Mails)
+                .Include(x => x.PersonalInfo)
+                .SingleOrDefaultAsync(user => user.EmailAddress.Equals(emailAdress));
         }
+
+        //public async Task DeleteMailFromUser(User? user, Mail mail)
+        //{
+        //    database.Users.Attach(user);
+        //    user.ReceivedMails.Remove(mail);
+        //    await database.SaveChangesAsync();
+        //}
     }   
 }

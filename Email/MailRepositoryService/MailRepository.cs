@@ -1,5 +1,6 @@
 ﻿using Email.DatabaseModel;
 using Email.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Email.MailRepositoryService
 {
@@ -12,15 +13,19 @@ namespace Email.MailRepositoryService
         }
         public async Task CreateMail(Mail mail)
         {
-            database.Users.Attach(mail.Sender);
+            database.Users.Attach(mail.Destination);
             database.AttachRange(mail.Receivers);
-            database.Emails.Add(mail);
+            database.Mails.Add(mail);
             await database.SaveChangesAsync();
         }
         public async Task DeleteMail(Mail mail)
         {
-            database.Emails.Remove(mail);
+            database.Mails.Remove(mail);
             await database.SaveChangesAsync();
+        }
+        public async Task<Mail> GetMailById(int id)
+        {
+            return await database.Mails.FirstOrDefaultAsync(x=>x.Id==id);
         }
     }
 }
