@@ -14,6 +14,7 @@ namespace Email.Models.MailModels
         public bool Seen { get; set; }
 <<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
 <<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
+<<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
         private const int allowedStringSize = 105;
         public MailListModel(Mail mail)
         {
@@ -25,6 +26,8 @@ namespace Email.Models.MailModels
 =======
 =======
 >>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
+=======
+>>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
         public ListOfMailsModel(Mail mail)
         {
             Id= mail.Id;
@@ -32,6 +35,9 @@ namespace Email.Models.MailModels
             Subject = mail.Subject;
             Message = mail.Message;
 <<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
+<<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
+>>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
+=======
 >>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
 =======
 >>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
@@ -39,6 +45,7 @@ namespace Email.Models.MailModels
             DateTime_ = mail.DateTime_;
             Seen= mail.Seen;
         }
+<<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
 <<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
 <<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
 
@@ -52,6 +59,8 @@ namespace Email.Models.MailModels
 
         public MailListModel(){}
 =======
+=======
+>>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
 =======
 >>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
         public ListOfMailsModel(){}
