@@ -13,6 +13,7 @@ namespace Email.Models.MailModels
         public string DateTime_ { get; set; }
         public bool Seen { get; set; }
 <<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
+<<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
         private const int allowedStringSize = 105;
         public MailListModel(Mail mail)
         {
@@ -22,17 +23,23 @@ namespace Email.Models.MailModels
             int allowedMessageSize = allowedStringSize - mail.Subject.Count();
             Message = FixedSize(mail.Message, allowedMessageSize);
 =======
+=======
+>>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
         public ListOfMailsModel(Mail mail)
         {
             Id= mail.Id;
             Name = mail.Sender.PersonalInfo.FirstName;
             Subject = mail.Subject;
             Message = mail.Message;
+<<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
+>>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
+=======
 >>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
             EmailCategory = mail.EmailCategory;
             DateTime_ = mail.DateTime_;
             Seen= mail.Seen;
         }
+<<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
 <<<<<<< HEAD:Email/Models/MailModels/MailListModel.cs
 
         private string? FixedSize(string? message, int allowedSize)
@@ -45,6 +52,8 @@ namespace Email.Models.MailModels
 
         public MailListModel(){}
 =======
+=======
+>>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
         public ListOfMailsModel(){}
 >>>>>>> parent of bd8c286 (emali validation on send):Email/Models/MailModels/ListOfMailsModel.cs
     }
