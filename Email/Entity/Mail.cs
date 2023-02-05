@@ -1,4 +1,7 @@
-﻿namespace Email.Entity
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Email.Entity
 {
     public enum EmailCategories
     {
@@ -16,8 +19,16 @@
         public string DateTime_ { get; set; }
         public EmailCategories EmailCategory { get; set; }
         public bool Seen { get; set; } = false;
-        public int SenderId { get; set; }
-        public User Sender { get; set; }
-        public ICollection<User> Receivers { get; set; }
+        public string Sender { get; set; }
+        private string receivers;
+        [NotMapped]
+        public List<string> Receivers
+        {
+            get { return receivers.Split(",").ToList(); }
+            set { receivers = String.Join(",",value); }
+        }
+
+        public int DestinationId { get; set; }
+        public User Destination { get; set; }
     }
 }

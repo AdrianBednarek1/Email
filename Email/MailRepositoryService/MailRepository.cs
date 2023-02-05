@@ -14,12 +14,12 @@ namespace Email.MailRepositoryService
         {
             database.Users.Attach(mail.Sender);
             database.AttachRange(mail.Receivers);
-            database.Emails.Add(mail);
+            database.Mails.Add(mail);
             await database.SaveChangesAsync();
         }
         public async Task DeleteMail(Mail mail)
         {
-            database.Emails.Remove(mail);
+            database.Mails.Remove(mail);
             await database.SaveChangesAsync();
         }
     }
