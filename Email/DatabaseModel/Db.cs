@@ -15,8 +15,8 @@ namespace Email.DatabaseModel
         {
             modelBuilder.Entity<User>()
                 .HasMany(x => x.Mails)
-                .WithOne(x => x.Sender)
-                .HasForeignKey(x=>x.SenderId)
+                .WithOne(x => x.Destination)
+                .HasForeignKey(x=>x.DestinationId)
                 .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Person>().HasOne(x => x.UserAccount).WithOne(x=>x.PersonalInfo);
         }

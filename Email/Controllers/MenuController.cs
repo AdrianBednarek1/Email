@@ -12,7 +12,7 @@ namespace Email.Controllers
     public class MenuController : Controller
     {
         private readonly UserService userService;
-        private LoggedInModel loggedUser;
+        private LoggedModel loggedUser;
         private string userEmail => User?.FindFirstValue(ClaimTypes.Email) ?? "";
         public MenuController(UserService userService_)
         {

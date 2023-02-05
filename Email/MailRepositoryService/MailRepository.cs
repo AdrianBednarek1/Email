@@ -12,8 +12,7 @@ namespace Email.MailRepositoryService
         }
         public async Task CreateMail(Mail mail)
         {
-            database.Users.Attach(mail.Sender);
-            database.AttachRange(mail.Receivers);
+            database.Users.Attach(mail.Destination);
             database.Mails.Add(mail);
             await database.SaveChangesAsync();
         }

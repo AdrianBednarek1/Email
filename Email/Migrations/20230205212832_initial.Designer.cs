@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Email.Migrations
 {
     [DbContext(typeof(Db))]
-    [Migration("20230130201308_5")]
-    partial class _5
+    [Migration("20230205212832_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,23 +36,30 @@ namespace Email.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DestinationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("EmailCategory")
                         .HasColumnType("int");
 
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SenderId")
-                        .HasColumnType("int");
+                    b.Property<bool>("Seen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Sender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SenderId");
+                    b.HasIndex("DestinationId");
 
-                    b.ToTable("Emails");
+                    b.ToTable("Mails");
                 });
 
             modelBuilder.Entity("Email.Entity.Person", b =>
@@ -110,30 +117,15 @@ namespace Email.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MailUser", b =>
-                {
-                    b.Property<int>("ReceivedMailsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReceiversId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ReceivedMailsId", "ReceiversId");
-
-                    b.HasIndex("ReceiversId");
-
-                    b.ToTable("UserMail", (string)null);
-                });
-
             modelBuilder.Entity("Email.Entity.Mail", b =>
                 {
-                    b.HasOne("Email.Entity.User", "Sender")
-                        .WithMany("SentMails")
-                        .HasForeignKey("SenderId")
+                    b.HasOne("Email.Entity.User", "Destination")
+                        .WithMany("Mails")
+                        .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Sender");
+                    b.Navigation("Destination");
                 });
 
             modelBuilder.Entity("Email.Entity.Person", b =>
@@ -147,27 +139,12 @@ namespace Email.Migrations
                     b.Navigation("UserAccount");
                 });
 
-            modelBuilder.Entity("MailUser", b =>
-                {
-                    b.HasOne("Email.Entity.Mail", null)
-                        .WithMany()
-                        .HasForeignKey("ReceivedMailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Email.Entity.User", null)
-                        .WithMany()
-                        .HasForeignKey("ReceiversId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Email.Entity.User", b =>
                 {
+                    b.Navigation("Mails");
+
                     b.Navigation("PersonalInfo")
                         .IsRequired();
-
-                    b.Navigation("SentMails");
                 });
 #pragma warning restore 612, 618
         }

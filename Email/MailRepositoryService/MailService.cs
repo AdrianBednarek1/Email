@@ -9,11 +9,14 @@ namespace Email.MailRepositoryService
         {
             mailRepository = mailRepository_;
         }
-        public async Task<bool> CreateMail(Mail mail)
+        public async Task<bool> CreateMails(List<Mail> mails)
         {
-            bool mailIsnull = mail == null;
-            if (mailIsnull) return false;
-            await mailRepository.CreateMail(mail);
+            foreach (var mail in mails)
+            {
+                bool mailIsnull = mail == null;
+                if (mailIsnull) return false;
+                await mailRepository.CreateMail(mail);
+            }
             return true;
         }
         

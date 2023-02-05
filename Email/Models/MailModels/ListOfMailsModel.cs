@@ -16,7 +16,8 @@ namespace Email.Models.MailModels
         public ListOfMailsModel(Mail mail)
         {
             Id= mail.Id;
-            Name = mail.Sender.PersonalInfo.FirstName;
+            int ignoreLastTenChars = mail.Sender.Length - 10;
+            Name = mail.Sender.Substring(0, ignoreLastTenChars);
             Subject = FixedSize(mail.Subject, allowedStringSize);
             int allowedMessageSize = allowedStringSize - mail.Subject.Count();
             Message = FixedSize(mail.Message, allowedMessageSize);

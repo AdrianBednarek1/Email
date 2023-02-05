@@ -3,7 +3,7 @@ using Email.Models.MailModels;
 
 namespace Email.Models
 {
-    public class LoggedInModel
+    public class LoggedModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -15,20 +15,16 @@ namespace Email.Models
             set { emailAddress = value; }
         }
         public string Password { get; set; }
-        public List<ListOfMailsModel> ReceivedMails { get; set; } = new List<ListOfMailsModel>();
-        public List<ListOfMailsModel> SentMails { get; set; } = new List<ListOfMailsModel>();
-        public LoggedInModel(User user)
+        public List<ListOfMailsModel> Mails { get; set; } = new List<ListOfMailsModel>();
+        public LoggedModel(User user)
         {
             Id = user.Id;
             FirstName = user.PersonalInfo.FirstName;
             LastName = user.PersonalInfo.LastName;
             EmailAddress = user.EmailAddress;
             Password = user.Password;
-            List<Mail> receivedMails = new List<Mail>(user.ReceivedMails);
-            List<Mail> sentMails = new List<Mail>(user.SentMails);
-            receivedMails.ForEach(item => ReceivedMails.Add(new ListOfMailsModel(item)));
-            sentMails.ForEach(item => SentMails.Add(new ListOfMailsModel(item)));
+            user.Mails.ForEach(item => Mails.Add(new ListOfMailsModel(item)));
         }
-        public LoggedInModel() { }
+        public LoggedModel() { }
     }
 }

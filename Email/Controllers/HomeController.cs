@@ -36,11 +36,11 @@ namespace Email.Controllers
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
             if (!ModelState.IsValid) return View();
-            ClaimsPrincipal userData = await userService.Login(loginModel);
-            bool incorrectInput = userData == null;
+            ClaimsPrincipal cookies = await userService.Login(loginModel);
+            bool incorrectInput = cookies == null;
             ViewData["InputValidation"] = incorrectInput ? "Wrong Password or Email" : null;
             if (incorrectInput) return View();
-            await HttpContext.SignInAsync(userData);
+            await HttpContext.SignInAsync(cookies);
             return Redirect("/Menu/Index");
         }
         [HttpGet]

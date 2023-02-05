@@ -1,4 +1,4 @@
-﻿@model Email.Models.LoggedInModel
+﻿@model Email.Models.LoggedModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,7 +7,7 @@
 <p>@Model.EmailAddress</p>
 <a asp-action="SendMail">Send Mail</a>
 <table class="table" style="width:100%">
-    @foreach (var item in Model.ReceivedMails)
+    @foreach (var item in Model.Mails)
     {
         <tr>
             <td>

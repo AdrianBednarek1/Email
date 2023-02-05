@@ -47,8 +47,7 @@ namespace Email.Models
                 EmailAddress = EmailAddress,
                 Password = Password,
                 PersonalInfo = person,
-                ReceivedMails = new List<Mail>(),
-                SentMails = new List<Mail>()
+                Mails = new List<Mail>()
             };
             return account;
         }

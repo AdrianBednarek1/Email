@@ -6,6 +6,6 @@
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public Person PersonalInfo { get; set; } = new Person();
-        public ICollection<Mail> Mails { get; set; } 
+        public List<Mail> Mails { get; set; }
     }
 }
