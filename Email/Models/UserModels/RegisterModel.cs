@@ -15,8 +15,8 @@ namespace Email.Models
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
 
-        private int age;
         [Range(10,70,ErrorMessage = "Your age must be between 10 and 70")]
+        private int age;
         public int Age
         {
             get { return age; }
