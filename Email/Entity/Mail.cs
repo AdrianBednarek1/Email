@@ -11,6 +11,11 @@ namespace Email.Entity
         Unwanted,
         Junk
     }
+    public enum EmailTypes
+    {
+        Sent,
+        Received
+    }
     public class Mail
     {
         public int Id { get; set; }
@@ -18,6 +23,7 @@ namespace Email.Entity
         public string? Message { get; set; }
         public string DateTime_ { get; set; }
         public EmailCategories EmailCategory { get; set; }
+        public EmailTypes EmailType { get; set; }
         public bool Seen { get; set; } = false;
         public string Sender { get; set; }
         private string receivers;

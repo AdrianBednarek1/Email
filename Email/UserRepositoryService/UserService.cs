@@ -79,7 +79,8 @@ namespace Email.UserRepositoryService
                     Sender = mailModel.Sender,
                     Subject = mailModel.Subject,
                     Receivers = mailModel.GetListOfReceivers(),
-                    Destination = user
+                    Destination = user,
+                    EmailType = EmailTypes.Received
                 };
                 mails.Add(email);
             }
@@ -92,7 +93,8 @@ namespace Email.UserRepositoryService
                 Sender = mailModel.Sender,
                 Subject = mailModel.Subject,
                 Receivers = mailModel.GetListOfReceivers(),
-                Destination = sender
+                Destination = sender,
+                EmailType= EmailTypes.Sent
             };
             mails.Add(mailToSender);
 

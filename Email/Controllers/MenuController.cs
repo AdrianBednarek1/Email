@@ -23,7 +23,7 @@ namespace Email.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            GetMailsModel getMails = new GetMailsModel(userEmail,userEmail,"",Entity.EmailCategories.Primary);
+            GetMailsModel getMails = new GetMailsModel(userEmail,"",Entity.EmailCategories.Primary,Entity.EmailTypes.Received);
             IQueryable<ListMailModel> listMailModel = await mailService.GetMails(getMails);
             return View(listMailModel);
         }

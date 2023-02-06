@@ -10,6 +10,7 @@ namespace Email.Models.MailModels
         public string? Subject { get; set; }
         public string? Message { get; set; }
         public EmailCategories EmailCategory { get; set; }
+        public EmailTypes EmailType { get; set; }
         public string DateTime_ { get; set; }
         public bool Seen { get; set; }
         private const int allowedStringSize = 105;
@@ -25,6 +26,7 @@ namespace Email.Models.MailModels
             EmailCategory = mail.EmailCategory;
             DateTime_ = mail.DateTime_;
             Seen= mail.Seen;
+            EmailType= mail.EmailType;
         }
         private string? FixedSize(string? message, int allowedSize)
         {
