@@ -1,17 +1,18 @@
-﻿@model Email.Models.LoggedModel
+﻿@using Email.Models.MailModels;
+@using System.Security.Claims;
+@model IQueryable<ListMailModel>
 @{
     ViewData["Title"] = "Index";
 }
 <a asp-action="SignOut">Sign Out</a>
-<p>@Model.FirstName @Model.LastName</p>
-<p>@Model.EmailAddress</p>
+<p>@User?.FindFirst(ClaimTypes.Name)?.Value @User?.FindFirst(ClaimTypes.Surname)?.Value</p>
 <a asp-action="SendMail">Send Mail</a>
 <table class="table" style="width:100%">
-    @foreach (var item in Model.Mails)
+    @foreach (var item in Model)
     {
         <tr>
             <td>
-                <p>@item.Name  </p>
+                <p>@item.SenderName</p>
             </td> 
             <td>
                 <p>@item.Subject - @item.Message</p>

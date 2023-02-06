@@ -1,7 +1,4 @@
 ﻿using Email.Entity;
-using Email.Models.MailModels;
-using Microsoft.Build.Framework;
-using Newtonsoft.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 
 namespace Email.Models

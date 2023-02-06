@@ -1,5 +1,7 @@
 ﻿using Email.DatabaseModel;
 using Email.Entity;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.Xml;
 
 namespace Email.MailRepositoryService
 {
@@ -20,6 +22,13 @@ namespace Email.MailRepositoryService
         {
             database.Mails.Remove(mail);
             await database.SaveChangesAsync();
+        }
+        public async Task<List<Mail>> GetMailsByEmail(string emailAddress)
+        {
+            return await database.Mails
+                .Include(x=>x.Destination)
+                .Where(x=>x.Destination.EmailAddress.Equals(emailAddress))
+                .ToListAsync();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Email.Models
             set { emailAddress = value; }
         }
         public string Password { get; set; }
-        public List<ListOfMailsModel> Mails { get; set; } = new List<ListOfMailsModel>();
+        public List<ListMailModel> Mails { get; set; } = new List<ListMailModel>();
         public LoggedModel(User user)
         {
             Id = user.Id;
@@ -23,7 +23,7 @@ namespace Email.Models
             LastName = user.PersonalInfo.LastName;
             EmailAddress = user.EmailAddress;
             Password = user.Password;
-            user.Mails.ForEach(item => Mails.Add(new ListOfMailsModel(item)));
+            user.Mails.ForEach(item => Mails.Add(new ListMailModel(item)));
         }
         public LoggedModel() { }
     }

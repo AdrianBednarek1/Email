@@ -1,4 +1,5 @@
-﻿using Email.Models;
+﻿using Email.MailRepositoryService;
+using Email.Models;
 using Email.Models.MailModels;
 using Email.UserRepositoryService;
 using Microsoft.AspNetCore.Authentication;
@@ -12,16 +13,19 @@ namespace Email.Controllers
     public class MenuController : Controller
     {
         private readonly UserService userService;
+        private readonly MailService mailService;
         private LoggedModel loggedUser;
         private string userEmail => User?.FindFirstValue(ClaimTypes.Email) ?? "";
-        public MenuController(UserService userService_)
+        public MenuController(UserService userService_, MailService mailService_)
         {
             userService = userService_;
+            mailService = mailService_;
         }
         public async Task<IActionResult> Index()
         {
-            if (loggedUser == null) await Refresh();
-            return View(loggedUser);
+            GetMailsModel getMails = new GetMailsModel(userEmail,userEmail,"",Entity.EmailCategories.Primary);
+            IQueryable<ListMailModel> listMailModel = await mailService.GetMails(getMails);
+            return View(listMailModel);
         }
         private async Task Refresh()
         {
