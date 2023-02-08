@@ -43,10 +43,11 @@ namespace Email.UserRepositoryService
         {
             bool mailsAreValid = await CheckEmailValidations(modelEmail.GetListOfReceivers());
             if (!mailsAreValid) return false;
-            List<Mail> mails = await ModelToEntity(modelEmail);
-            bool mailSent = await mailService.CreateMails(mails);
-            if (!mailSent) return false;
-            return true;
+            List<string> destinationEmails = new List<string>(modelEmail.GetListOfReceivers()) { modelEmail.Sender };
+            List<User> destinations = new List<User>();
+            foreach (var item in destinationEmails) destinations.Add(await userRepository.GetUserByEmail(item));        
+            bool mailIsSent = await mailService.SendMails(modelEmail, destinations);
+            return mailIsSent;
         }
         public async Task<bool> CheckEmailValidations(List<string> list)
         {
@@ -64,41 +65,6 @@ namespace Email.UserRepositoryService
             if (modelIsEmpty) return null;
             User user = await userRepository.GetUserByEmail(model.EmailAddress);
             return user;
-        }
-        private async Task<List<Mail>> ModelToEntity(SendMailModel mailModel)
-        {
-            List<Mail> mails = new List<Mail>();
-            foreach (var item in mailModel.GetListOfReceivers())
-            {
-                User user = await userRepository.GetUserByEmail(item);
-                Mail email = new Mail()
-                {
-                    DateTime_ = mailModel.DateTime_,
-                    EmailCategory = mailModel.EmailCategory,
-                    Message = mailModel.Message,
-                    Sender = mailModel.Sender,
-                    Subject = mailModel.Subject,
-                    Receivers = mailModel.GetListOfReceivers(),
-                    Destination = user,
-                    EmailType = EmailTypes.Received
-                };
-                mails.Add(email);
-            }
-            User sender = await userRepository.GetUserByEmail(mailModel.Sender);
-            Mail mailToSender = new Mail()
-            {
-                DateTime_ = mailModel.DateTime_,
-                EmailCategory = mailModel.EmailCategory,
-                Message = mailModel.Message,
-                Sender = mailModel.Sender,
-                Subject = mailModel.Subject,
-                Receivers = mailModel.GetListOfReceivers(),
-                Destination = sender,
-                EmailType= EmailTypes.Sent
-            };
-            mails.Add(mailToSender);
-
-            return mails;
         }
     }
 }

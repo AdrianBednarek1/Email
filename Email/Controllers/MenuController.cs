@@ -14,7 +14,6 @@ namespace Email.Controllers
     {
         private readonly UserService userService;
         private readonly MailService mailService;
-        private LoggedModel loggedUser;
         private string userEmail => User?.FindFirstValue(ClaimTypes.Email) ?? "";
         public MenuController(UserService userService_, MailService mailService_)
         {
@@ -26,10 +25,6 @@ namespace Email.Controllers
             GetMailsModel getMails = new GetMailsModel(userEmail,"",Entity.EmailCategories.Primary,Entity.EmailTypes.Received);
             IQueryable<ListMailModel> listMailModel = await mailService.GetMails(getMails);
             return View(listMailModel);
-        }
-        private async Task Refresh()
-        {
-            loggedUser = await userService.GetUserByEmail(userEmail);
         }
         [HttpGet]
         public async Task<IActionResult> SignOut()
