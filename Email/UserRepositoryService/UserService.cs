@@ -36,7 +36,7 @@ namespace Email.UserRepositoryService
         {
             User user = await userRepository.GetUserByEmail(email);
             bool userDoesntExists = user == null;
-            LoggedModel loggedInModel = userDoesntExists ? null : new LoggedModel(user);
+            LoggedModel? loggedInModel = userDoesntExists ? null : new LoggedModel(user);
             return loggedInModel;
         }
         public async Task<bool> SendEmail(SendMailModel modelEmail)
@@ -45,7 +45,7 @@ namespace Email.UserRepositoryService
             if (!mailsAreValid) return false;
             List<string> destinationEmails = new List<string>(modelEmail.GetListOfReceivers()) { modelEmail.Sender };
             List<User> destinations = new List<User>();
-            foreach (var item in destinationEmails) destinations.Add(await userRepository.GetUserByEmail(item));        
+            foreach (var email in destinationEmails) destinations.Add(await userRepository.GetUserByEmail(email));        
             bool mailIsSent = await mailService.SendMails(modelEmail, destinations);
             return mailIsSent;
         }
@@ -59,12 +59,5 @@ namespace Email.UserRepositoryService
             }
             return true;
         }   
-        public async Task<User> ModelToEntity(LoggedModel model)
-        {
-            bool modelIsEmpty = model == null;
-            if (modelIsEmpty) return null;
-            User user = await userRepository.GetUserByEmail(model.EmailAddress);
-            return user;
-        }
     }
 }
