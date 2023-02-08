@@ -1,5 +1,4 @@
 ﻿using Email.MailRepositoryService;
-using Email.Models;
 using Email.Models.MailModels;
 using Email.UserRepositoryService;
 using Microsoft.AspNetCore.Authentication;
@@ -37,7 +36,13 @@ namespace Email.Controllers
         {
             return View();
         }
-        [HttpPost]
+		[HttpPost]
+		public async Task<IActionResult> Delete(int mailId)
+		{
+            await mailService.Delete(mailId);
+			return Redirect("/Menu/Index");
+		}
+		[HttpPost]
         public async Task<IActionResult> SendMail(SendMailModel? mailModel)
         {
             if (!ModelState.IsValid) return View();

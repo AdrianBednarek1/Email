@@ -30,5 +30,12 @@ namespace Email.MailRepositoryService
                 .Where(x=>x.Destination.EmailAddress.Equals(emailAddress))
                 .ToListAsync();
         }
-    }
+
+		public async Task<Mail> GetMailById(int mailId)
+		{
+            return await database.Mails
+                .Include(x=>x.Destination)
+                .FirstOrDefaultAsync(x=>x.Id==mailId);
+		}
+	}
 }

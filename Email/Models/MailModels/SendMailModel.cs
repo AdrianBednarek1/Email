@@ -11,7 +11,7 @@ namespace Email.Models.MailModels
         public string DateTime_ { get; set; }
         public string Sender { get; set; }
         public string Receivers { get; set; }
-        public List<string> GetListOfReceivers()
+        public List<string> ReceiversToList()
         {
             if (String.IsNullOrEmpty(Receivers)) return null;
             string removedWhiteSpace = String.Concat(Receivers.Where(c => !Char.IsWhiteSpace(c)));

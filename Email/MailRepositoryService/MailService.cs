@@ -1,8 +1,5 @@
 ﻿using Email.Entity;
 using Email.Models.MailModels;
-using Email.UserRepositoryService;
-using Microsoft.Identity.Client;
-using System.Linq;
 
 namespace Email.MailRepositoryService
 {
@@ -15,7 +12,7 @@ namespace Email.MailRepositoryService
         }
         public async Task<bool> SendMails(SendMailModel modelEmail, List<User> destinations)
         {
-            List<Mail> mails = ModelToEntity(modelEmail, destinations);
+            List<Mail> mails = ModelsToEntity(modelEmail, destinations);
             foreach (var mail in mails)
             {
                 bool mailIsnull = mail == null;
@@ -43,7 +40,7 @@ namespace Email.MailRepositoryService
                     x.Subject.Contains(getMails.Filter)))
                 .OrderBy(x => x.DateTime_);
         }
-        private List<Mail> ModelToEntity(SendMailModel mailModel, List<User> destinations)
+        private List<Mail> ModelsToEntity(SendMailModel mailModel, List<User> destinations)
         {
             List<Mail> mails = new List<Mail>();
             int count = 0;
@@ -51,20 +48,31 @@ namespace Email.MailRepositoryService
             {
                 count++;
                 bool thisIsLastItem = destinations.Count() == count;
-                Mail email = new Mail()
-                {
-                    DateTime_ = mailModel.DateTime_,
-                    EmailCategory = mailModel.EmailCategory,
-                    Message = mailModel.Message,
-                    Sender = mailModel.Sender,
-                    Subject = mailModel.Subject,
-                    Receivers = mailModel.GetListOfReceivers(),
-                    Destination = destination,
-                    EmailType = thisIsLastItem ? EmailTypes.Sent : EmailTypes.Received
-                };
+                Mail email = ModelToEntity(mailModel, destination);
+                email.EmailType = thisIsLastItem ? EmailTypes.Sent : EmailTypes.Received;
                 mails.Add(email);
             }
             return mails;
         }
-    }
+        private Mail ModelToEntity(SendMailModel mailModel, User destination)
+        {
+            Mail email = new Mail()
+            {
+                DateTime_ = mailModel.DateTime_,
+                EmailCategory = mailModel.EmailCategory,
+                Message = mailModel.Message,
+                Sender = mailModel.Sender,
+                Subject = mailModel.Subject,
+                Receivers = mailModel.ReceiversToList(),
+                Destination = destination,
+            };
+            return email;
+        }
+
+		public async Task Delete(int mailId)
+		{
+            Mail mail = await mailRepository.GetMailById(mailId);
+            await mailRepository.DeleteMail(mail);
+		}
+	}
 }

@@ -48,7 +48,7 @@ namespace Email.Controllers
         {
             return View();
         }
-        [HttpPost]
+		[HttpPost]
         public async Task<IActionResult> Register(RegisterModel accountModel)
         {
             if (!ModelState.IsValid) return View();

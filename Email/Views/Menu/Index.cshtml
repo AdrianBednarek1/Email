@@ -17,7 +17,12 @@
             <td>
                 <p>@item.Subject - @item.Message</p>
             </td>
-                <td style="width:20%">
+            <td>
+                <form method="post">
+                    <button type="submit" asp-action="Delete" asp-route-mailId="@item.Id" >Delete</button>
+                </form>
+            </td>
+            <td style="width:20%">
                 <p>@item.DateTime_</p>
             </td>
         </tr>         

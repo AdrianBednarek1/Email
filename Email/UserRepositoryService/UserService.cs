@@ -41,9 +41,9 @@ namespace Email.UserRepositoryService
         }
         public async Task<bool> SendEmail(SendMailModel modelEmail)
         {
-            bool mailsAreValid = await CheckEmailValidations(modelEmail.GetListOfReceivers());
+            bool mailsAreValid = await CheckEmailValidations(modelEmail.ReceiversToList());
             if (!mailsAreValid) return false;
-            List<string> destinationEmails = new List<string>(modelEmail.GetListOfReceivers()) { modelEmail.Sender };
+            List<string> destinationEmails = new List<string>(modelEmail.ReceiversToList()) { modelEmail.Sender };
             List<User> destinations = new List<User>();
             foreach (var email in destinationEmails) destinations.Add(await userRepository.GetUserByEmail(email));        
             bool mailIsSent = await mailService.SendMails(modelEmail, destinations);
