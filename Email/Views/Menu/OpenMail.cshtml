@@ -1,0 +1,10 @@
+﻿@using Email.Models.MailModels
+@model MailModel
+@{
+    ViewData["Title"] = "OpenMail";
+}
+<label>From: @Model.Sender</label>
+<h2>@Model.Subject</h2>
+<p>@Model.DateTime_</p>
+<label>To: @String.Join(",",Model.Receivers);</label>
+<p>@Model.Message</p>

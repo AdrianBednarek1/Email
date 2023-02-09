@@ -45,6 +45,10 @@ namespace Email.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Receivers_")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Seen")
                         .HasColumnType("bit");
 

@@ -9,7 +9,11 @@
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<div class="form-group">
 			<label asp-for="EmailAddress" class="control-label"></label>
-			<input asp-for="EmailAddress" class="form-control" />
+			<div class="form-group">
+				<p> 
+					<input asp-for="EmailAddress" class="form-control" />@@gmail.com
+				</p>
+			</div>				
 			<span asp-validation-for="EmailAddress" class="text-danger"></span>
 		</div>
 		<div class="form-group">

@@ -36,7 +36,17 @@ namespace Email.Controllers
         {
             return View();
         }
-		[HttpPost]
+        [HttpGet]
+        public async Task<IActionResult> OpenMail(int mailId)
+        {
+            MailModel mailModel = await mailService.GetMailById(mailId);
+            bool mailIsSeen = mailModel.Seen;
+            if(mailIsSeen) return View(mailModel);
+            UpdateMail updateMail = new UpdateMail(mailModel);
+            await mailService.UpdateMail(updateMail);
+            return View(mailModel);
+        }
+        [HttpPost]
 		public async Task<IActionResult> Delete(int mailId)
 		{
             await mailService.Delete(mailId);

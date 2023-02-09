@@ -29,7 +29,12 @@ namespace Email.MailRepositoryService
             IQueryable<ListMailModel> filteredMails = FilterMails(mailsModel.AsQueryable(), getMails);
             return filteredMails;
         }
-
+        public async Task<MailModel> GetMailById(int mailId)
+        {
+            Mail mail = await mailRepository.GetMailById(mailId);
+            MailModel mailModel = new MailModel(mail);
+            return mailModel;
+        }
         private IQueryable<ListMailModel> FilterMails(IQueryable<ListMailModel> mailsModel, GetMailsModel getMails)
         {
             return mailsModel.Where(x =>
@@ -68,11 +73,18 @@ namespace Email.MailRepositoryService
             };
             return email;
         }
-
 		public async Task Delete(int mailId)
 		{
             Mail mail = await mailRepository.GetMailById(mailId);
             await mailRepository.DeleteMail(mail);
 		}
-	}
+
+        public async Task UpdateMail(UpdateMail updateMail)
+        {
+            Mail mail = await mailRepository.GetMailById(updateMail.Id);
+            mail.EmailCategory = updateMail.EmailCategory;
+            mail.Seen= updateMail.Seen;
+            await mailRepository.UpdateMail(mail);
+        }
+    }
 }

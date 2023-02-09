@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Build.Framework;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Email.Entity
@@ -26,12 +27,12 @@ namespace Email.Entity
         public EmailTypes EmailType { get; set; }
         public bool Seen { get; set; } = false;
         public string Sender { get; set; }
-        private string receivers;
+        public string Receivers_ { get; set; }
         [NotMapped]
         public List<string> Receivers
         {
-            get { return receivers.Split(",").ToList(); }
-            set { receivers = String.Join(",",value); }
+            get { return Receivers_.Split(",").ToList(); }
+            set { Receivers_ = String.Join(",",value); }
         }
 
         public int DestinationId { get; set; }

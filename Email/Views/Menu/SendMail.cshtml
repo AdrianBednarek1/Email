@@ -12,12 +12,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Subject" class="control-label"></label>
-                <input asp-for="Subject" class="form-control" />
+                <input asp-for="Subject" style="width:200%;" class="form-control" />
                 <span asp-validation-for="Subject" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Receivers" class="control-label"></label>
-                <input asp-for="Receivers" class="form-control" />
+                <p>Example: example@gmail.com, example@gmail.com,...</p>
+                <input asp-for="Receivers" style="width:200%;" class="form-control" />
                 <span asp-validation-for="Receivers" class="text-danger"></span>
                 @if (ViewData["EmailValidation"] != null)
                 {
@@ -25,8 +26,8 @@
                 }
             </div>
             <div class="form-group">
-                <label style="height:50px;" asp-for="Message" class="control-label"></label>
-                <input asp-for="Message" class="form-control" />
+                <label asp-for="Message" class="control-label"></label>
+                <textarea asp-for="Message" style="width:200%;height:400px;" class="form-control"></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,8 +38,9 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Send" class="btn btn-primary" />
+                <a class="btn btn-outline-primary" asp-action="Index">Exit</a>
             </div>
         </form>
-        <button asp-action="Index">Exit</button>
+        
     </div>
 </div>

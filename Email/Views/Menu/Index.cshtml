@@ -7,25 +7,25 @@
 <a asp-action="SignOut">Sign Out</a>
 <p>@User?.FindFirst(ClaimTypes.Name)?.Value @User?.FindFirst(ClaimTypes.Surname)?.Value</p>
 <a asp-action="SendMail">Send Mail</a>
-<table class="table" style="width:100%">
+<div class="table" style="width:100%">
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
+        <a class="btn btn-outline-dark" style="height:65px" asp-action="OpenMail" asp-route-mailId="@item.Id">
+            <div class="d-xxl-table-cell">
                 <p>@item.SenderName</p>
-            </td> 
-            <td>
+            </div> 
+                <div class="d-xxl-table-cell" style="width:80%;">
                 <p>@item.Subject - @item.Message</p>
-            </td>
-            <td>
+            </div>
+                <div class="d-xxl-table-cell">
                 <form method="post">
-                    <button type="submit" asp-action="Delete" asp-route-mailId="@item.Id" >Delete</button>
+                    <button class="btn btn-outline-light" type="submit" asp-action="Delete" asp-route-mailId="@item.Id" >Delete</button>
                 </form>
-            </td>
-            <td style="width:20%">
+            </div>
+                <div class="d-xxl-table-cell" style="width:20%;">
                 <p>@item.DateTime_</p>
-            </td>
-        </tr>         
+            </div>      
+        </a>         
     }
-</table>
+</div>
 

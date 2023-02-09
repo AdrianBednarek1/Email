@@ -37,5 +37,11 @@ namespace Email.MailRepositoryService
                 .Include(x=>x.Destination)
                 .FirstOrDefaultAsync(x=>x.Id==mailId);
 		}
-	}
+
+        public async Task UpdateMail(Mail mail)
+        {
+            database.Mails.Update(mail);
+            await database.SaveChangesAsync();
+        }
+    }
 }
