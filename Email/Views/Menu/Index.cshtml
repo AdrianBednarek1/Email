@@ -19,19 +19,19 @@
 <div class="table" style="width:100%">
     @foreach (var item in Model)
     {
-        <a class="btn btn-outline-dark" style="height:65px" asp-action="OpenMail" asp-route-mailId="@item.Id">
+        <a class="btn btn-outline-dark" style="height:65px;width:100%;" asp-action="OpenMail" asp-route-mailId="@item.Id">
             <div class="d-xxl-table-cell">
                 <p>@item.SenderName</p>
             </div> 
-                <div class="d-xxl-table-cell" style="width:80%;text-align:left">
+                    <div class="d-xxl-table-cell" style="width:78%;text-align:left;">
                 <p>@item.Subject - @item.Message</p>
             </div>
-                <div class="d-xxl-table-cell">
+                    <div class="d-xxl-table-cell">
                 <form method="post">
-                    <button class="btn btn-outline-light" type="submit" asp-action="Delete" asp-route-mailId="@item.Id" >Delete</button>
+                        <button class="btn btn-outline-light" type="submit" asp-action="Delete" asp-route-value="@ViewData["value"]" asp-route-mailId="@item.Id" >Delete</button>
                 </form>
             </div>
-            <div class="d-xxl-table-cell" style="width:20%; text-align:right;">
+            <div class="d-xxl-table-cell" style="text-align:right;width = 100%;">
                 <p>@item.DateTime_</p>
             </div>      
         </a>         

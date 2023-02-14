@@ -21,6 +21,7 @@ namespace Email.Controllers
         }
         public async Task<IActionResult> Index(string? value)
         {
+            ViewData["value"] = value;
             GetMailsModel getMails = new GetMailsModel(value, userEmail);
             IQueryable<ListMailModel> listMailModel = await mailService.GetMails(getMails);
             return View(listMailModel);
@@ -47,10 +48,10 @@ namespace Email.Controllers
             return View(mailModel);
         }
         [HttpPost]
-		public async Task<IActionResult> Delete(int mailId)
+		public async Task<IActionResult> Delete(int mailId, string value)
 		{
             await mailService.Delete(mailId);
-			return Redirect("/Menu/Index");
+			return RedirectToAction("Index", new {value = value});
 		}
 		[HttpPost]
         public async Task<IActionResult> SendMail(SendMailModel? mailModel)
