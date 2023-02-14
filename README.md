@@ -1,5 +1,5 @@
 # Email
-Currently in process...
+CURRENTLY IN PROCESS...
 
 
  Functionality:
