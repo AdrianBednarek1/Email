@@ -4,9 +4,17 @@
 @{
     ViewData["Title"] = "Index";
 }
-<a asp-action="SignOut">Sign Out</a>
 <p>@User?.FindFirst(ClaimTypes.Name)?.Value @User?.FindFirst(ClaimTypes.Surname)?.Value</p>
-<a asp-action="SendMail">Send Mail</a>
+<div class="sidenav">
+    <a class="btn btn-outline-primary" asp-action="SendMail">Send Mail</a>
+    <a class="btn-secondary" href="#">Primary</a>
+    <a class="btn-secondary" href="#">Sent</a>
+    <a class="btn-secondary" href="#">Promotion</a>
+    <a class="btn-secondary" href="#">Social Media</a>
+    <a class="btn-secondary" href="#">Unwanted</a>
+    <a class="btn-secondary" href="#">Junk</a>
+    <a class="btn btn-outline-danger" asp-action="SignOut">Sign Out</a>
+</div>
 <div class="table" style="width:100%">
     @foreach (var item in Model)
     {
