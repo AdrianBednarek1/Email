@@ -6,6 +6,16 @@
 @{
     ViewData["Title"] = "SendMail";
 }
+<div class="side-nav">
+    <a class="btn btn-outline-light" style="text-align:left;" asp-action="SendMail">Send Mail</a>
+    <a class="btn-outline-secondary" href="#">Primary</a>
+    <a class="btn-outline-secondary" href="#">Sent</a>
+    <a class="btn-outline-secondary" href="#">Promotion</a>
+    <a class="btn-outline-secondary" href="#">Unwanted</a>
+    <a class="btn-outline-secondary" href="#">Junk</a>   
+    <a class="btn btn-outline-info" style="text-align:left;" asp-action="SignOut">Sign Out</a>
+</div>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="SendMail" method="post">

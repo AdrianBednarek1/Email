@@ -13,7 +13,7 @@ namespace Email.Controllers
     {
         private readonly UserService userService;
         private readonly MailService mailService;
-        private string userEmail => User?.FindFirstValue(ClaimTypes.Email) ?? "";
+        private string currentUser => User?.FindFirstValue(ClaimTypes.Email) ?? "";
         public MenuController(UserService userService_, MailService mailService_)
         {
             userService = userService_;
@@ -21,8 +21,10 @@ namespace Email.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            GetMailsModel getMails = new GetMailsModel(userEmail,"",Entity.EmailCategories.Primary,Entity.EmailTypes.Received);
-            IQueryable<ListMailModel> listMailModel = await mailService.GetMails(getMails);
+            MailFilterModel mailFilter = 
+                new MailFilterModel(currentUser,"",Entity.EmailCategories.Primary,Entity.EmailTypes.Received);
+            
+            IQueryable<ListMailModel> listMailModel = await mailService.GetMails(mailFilter);
             return View(listMailModel);
         }
         [HttpGet]

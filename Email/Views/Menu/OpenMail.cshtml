@@ -3,8 +3,23 @@
 @{
     ViewData["Title"] = "OpenMail";
 }
-<label>From: @Model.Sender</label>
-<h2>@Model.Subject</h2>
+<div class="side-nav">
+    <a class="btn btn-outline-light" style="text-align:left;" asp-action="SendMail">Send Mail</a>
+    <a class="btn-outline-secondary" href="#">Primary</a>
+    <a class="btn-outline-secondary" href="#">Sent</a>
+    <a class="btn-outline-secondary" href="#">Promotion</a>
+    <a class="btn-outline-secondary" href="#">Unwanted</a>
+    <a class="btn-outline-secondary" href="#">Junk</a>   
+    <a class="btn btn-outline-info" style="text-align:left;" asp-action="SignOut">Sign Out</a>
+</div>
+
+<div class="flex-xxl-column">
+    <p>@Model.Subject</p>
+</div>
+<div class="flex-column">
+    <p>From: @Model.Sender</p>
+</div>
+
+<p>To: @String.Join(",",Model.Receivers);</p>
 <p>@Model.DateTime_</p>
-<label>To: @String.Join(",",Model.Receivers);</label>
 <p>@Model.Message</p>
