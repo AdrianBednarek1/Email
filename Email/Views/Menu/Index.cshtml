@@ -1,4 +1,5 @@
 ﻿@using Email.Models.MailModels;
+@using Email.Entity;
 @using System.Security.Claims;
 @model IQueryable<ListMailModel>
 @{
@@ -7,12 +8,12 @@
 <p>@User?.FindFirst(ClaimTypes.Name)?.Value @User?.FindFirst(ClaimTypes.Surname)?.Value</p>
 <div class="sidenav">
     <a class="btn btn-outline-primary" asp-action="SendMail">Send Mail</a>
-    <a class="btn-secondary" href="#">Primary</a>
-    <a class="btn-secondary" href="#">Sent</a>
-    <a class="btn-secondary" href="#">Promotion</a>
-    <a class="btn-secondary" href="#">Social Media</a>
-    <a class="btn-secondary" href="#">Unwanted</a>
-    <a class="btn-secondary" href="#">Junk</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Primary">Primary</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="type:@EmailTypes.Sent">Sent</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Promotion">Promotion</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.SocialMedia">Social Media</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Unwanted">Unwanted</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Junk">Junk</a>
     <a class="btn btn-outline-danger" asp-action="SignOut">Sign Out</a>
 </div>
 <div class="table" style="width:100%">
@@ -22,7 +23,7 @@
             <div class="d-xxl-table-cell">
                 <p>@item.SenderName</p>
             </div> 
-                <div class="d-xxl-table-cell" style="width:80%;">
+                <div class="d-xxl-table-cell" style="width:80%;text-align:left">
                 <p>@item.Subject - @item.Message</p>
             </div>
                 <div class="d-xxl-table-cell">
@@ -30,7 +31,7 @@
                     <button class="btn btn-outline-light" type="submit" asp-action="Delete" asp-route-mailId="@item.Id" >Delete</button>
                 </form>
             </div>
-                <div class="d-xxl-table-cell" style="width:20%;">
+            <div class="d-xxl-table-cell" style="width:20%; text-align:right;">
                 <p>@item.DateTime_</p>
             </div>      
         </a>         

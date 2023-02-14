@@ -19,9 +19,9 @@ namespace Email.Controllers
             userService = userService_;
             mailService = mailService_;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? value)
         {
-            GetMailsModel getMails = new GetMailsModel(userEmail,"",Entity.EmailCategories.Primary,Entity.EmailTypes.Received);
+            GetMailsModel getMails = new GetMailsModel(value, userEmail);
             IQueryable<ListMailModel> listMailModel = await mailService.GetMails(getMails);
             return View(listMailModel);
         }
