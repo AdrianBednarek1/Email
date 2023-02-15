@@ -6,6 +6,12 @@
     ViewData["Title"] = "Index";
 }
 <p>@User?.FindFirst(ClaimTypes.Name)?.Value @User?.FindFirst(ClaimTypes.Surname)?.Value</p>
+
+<form method="get" class="form-label">
+    <input type="text" name="value"/>
+    <input type="submit" value="Search"/>
+</form>
+
 <div class="sidenav">
     <a class="btn btn-outline-primary" asp-action="SendMail">Send Mail</a>
     <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Primary">Primary</a>

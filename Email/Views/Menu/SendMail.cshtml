@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims;
+@using Email.Entity;
 @model Email.Models.MailModels.MailModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -6,6 +7,16 @@
 @{
     ViewData["Title"] = "SendMail";
 }
+<div class="sidenav">
+    <a class="btn btn-outline-primary" asp-action="SendMail">Send Mail</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Primary">Primary</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="type:@EmailTypes.Sent">Sent</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Promotion">Promotion</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.SocialMedia">Social Media</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Unwanted">Unwanted</a>
+    <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Junk">Junk</a>
+    <a class="btn btn-outline-danger" asp-action="SignOut">Sign Out</a>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="SendMail" method="post">

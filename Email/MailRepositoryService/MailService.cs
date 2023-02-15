@@ -21,7 +21,7 @@ namespace Email.MailRepositoryService
             }
             return true;
         }
-        public async Task<IQueryable<ListMailModel>> GetMails(GetMailsModel getMails)
+        public async Task<IQueryable<ListMailModel>> GetMails(MailFilterModel getMails)
         {
             List<Mail> mails = await mailRepository.GetMailsByEmail(getMails.EmailAddress);
             List<ListMailModel> mailsModel = new List<ListMailModel>();
@@ -35,7 +35,7 @@ namespace Email.MailRepositoryService
             MailModel mailModel = new MailModel(mail);
             return mailModel;
         }
-        private IQueryable<ListMailModel> FilterMails(IQueryable<ListMailModel> mailsModel, GetMailsModel getMails)
+        private IQueryable<ListMailModel> FilterMails(IQueryable<ListMailModel> mailsModel, MailFilterModel getMails)
         {
             return mailsModel.Where(x =>
                     x.EmailCategory.Equals(getMails.EmailCategories_) &&
@@ -52,9 +52,9 @@ namespace Email.MailRepositoryService
             foreach (var destination in destinations)
             {
                 count++;
-                bool thisIsLastItem = destinations.Count() == count;
+                bool mailForSender = destinations.Count() == count;
                 Mail email = ModelToEntity(mailModel, destination);
-                email.EmailType = thisIsLastItem ? EmailTypes.Sent : EmailTypes.Received;
+                email.EmailType = mailForSender ? EmailTypes.Sent : EmailTypes.Received;
                 mails.Add(email);
             }
             return mails;

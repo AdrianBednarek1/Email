@@ -53,6 +53,7 @@ namespace Email.Controllers
         {
             if (!ModelState.IsValid) return View();
             bool correctInput = await userService.Create(accountModel);
+            ViewData["emailAddress"] = correctInput ? null : "Email address is incorrect or already exists!.";
             if (!correctInput) return View();
             return RedirectToAction("Login");
         }

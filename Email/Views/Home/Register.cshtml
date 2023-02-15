@@ -37,6 +37,10 @@
                 <label asp-for="EmailAddress" class="control-label"></label>
                 <input asp-for="EmailAddress" class="form-control" />
                 <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                @if (ViewData["emailAddress"] != null)
+                {
+                    <p class="text-danger">@ViewData["emailAddress"]</p>
+                }
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>

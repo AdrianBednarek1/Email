@@ -22,7 +22,7 @@ namespace Email.Controllers
         public async Task<IActionResult> Index(string? value)
         {
             ViewData["value"] = value;
-            GetMailsModel getMails = new GetMailsModel(value, userEmail);
+            MailFilterModel getMails = new MailFilterModel(value, userEmail);
             IQueryable<ListMailModel> listMailModel = await mailService.GetMails(getMails);
             return View(listMailModel);
         }

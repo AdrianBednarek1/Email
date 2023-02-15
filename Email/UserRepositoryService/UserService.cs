@@ -19,10 +19,19 @@ namespace Email.UserRepositoryService
         }
         public async Task<bool> Create(RegisterModel registerModel)
         {
-            bool emailAddressExists = await userRepository.GetUserByEmail(registerModel.EmailAddress) != null;
-            if (emailAddressExists) return false;
+            bool emailIsCorrect = await ValidateNewEmail(registerModel.EmailAddress);
+            if (!emailIsCorrect) return false;
             User account = registerModel.GetUserEntity();
             await userRepository.CreateUser(account);
+            return true;
+        }
+        private async Task<bool> ValidateNewEmail(string emailAddress)
+        {
+            bool emailAddressExists = await userRepository.GetUserByEmail(emailAddress) != null;
+            if (emailAddressExists) return false;
+            bool hasNotAllowedSymbols=emailAddress.Any(x => !Char.IsLetterOrDigit(x)&&!x.Equals('.')&&!x.Equals('-'));
+            bool doesntHaveLetters = !emailAddress.Any(x => Char.IsLetterOrDigit(x));
+            if (hasNotAllowedSymbols || doesntHaveLetters) return false;
             return true;
         }
         public async Task<ClaimsPrincipal> Login(LoginModel loginModel)
