@@ -12,8 +12,8 @@ namespace Email.Models
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
 
-        [Range(10,70,ErrorMessage = "Your age must be between 10 and 70")]
         private int age;
+        [Range(10,70,ErrorMessage = "Your age must be between 10 and 70")]
         public int Age
         {
             get { return age; }
@@ -26,6 +26,10 @@ namespace Email.Models
         {
             get { return String.IsNullOrEmpty(emailAddress) ? null : emailAddress + $"@gmail.com"; }
             set { emailAddress = value; }
+        }
+        public string EmailAddressNameOnly
+        {
+            get { return String.IsNullOrEmpty(emailAddress) ? null : emailAddress; }
         }
         [MinLength(6)]
 		public string Password { get; set; }

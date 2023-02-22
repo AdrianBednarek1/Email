@@ -19,7 +19,7 @@ namespace Email.UserRepositoryService
         }
         public async Task<bool> Create(RegisterModel registerModel)
         {
-            bool emailIsCorrect = await ValidateNewEmail(registerModel.EmailAddress);
+            bool emailIsCorrect = await ValidateNewEmail(registerModel.EmailAddressNameOnly);
             if (!emailIsCorrect) return false;
             User account = registerModel.GetUserEntity();
             await userRepository.CreateUser(account);
@@ -29,8 +29,8 @@ namespace Email.UserRepositoryService
         {
             bool emailAddressExists = await userRepository.GetUserByEmail(emailAddress) != null;
             if (emailAddressExists) return false;
-            bool hasNotAllowedSymbols=emailAddress.Any(x => !Char.IsLetterOrDigit(x)&&!x.Equals('.')&&!x.Equals('-'));
-            bool doesntHaveLetters = !emailAddress.Any(x => Char.IsLetterOrDigit(x));
+            bool hasNotAllowedSymbols= emailAddress.Any(x => !Char.IsLetterOrDigit(x)&&!x.Equals('.')&&!x.Equals('-'));
+            bool doesntHaveLetters = !emailAddress.Any(x => Char.IsLetter(x));
             if (hasNotAllowedSymbols || doesntHaveLetters) return false;
             return true;
         }
