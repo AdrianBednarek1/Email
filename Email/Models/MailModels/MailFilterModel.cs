@@ -34,7 +34,6 @@ namespace Email.Models.MailModels
         {
             bool setEmailCategory = array[0].Contains("category");
             bool setEmailType = array[0].Contains("type");
-            //bool setFilter = array[0].Contains("search");
 
             if (setEmailCategory) EmailCategories_ = (EmailCategories)Enum.Parse(EmailCategories_.GetType(), array[1]);
             else if (setEmailType) EmailType = (EmailTypes)Enum.Parse(EmailType.GetType(), array[1]);

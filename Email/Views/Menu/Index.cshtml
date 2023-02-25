@@ -7,9 +7,9 @@
 }
 <p>@User?.FindFirst(ClaimTypes.Name)?.Value @User?.FindFirst(ClaimTypes.Surname)?.Value</p>
 
-<form method="get" class="form-label">
-    <input type="text" name="value"/>
-    <input type="submit" value="Search"/>
+<form method="get" action="Index" style="margin-bottom: 10px;" class="input-group">
+    <input type="text" placeholder="Search.." style="width:20%; margin-right:10px" value="@ViewData["value"]" name="value"/>
+    <input type="submit" class="btn btn-outline-dark" value="Search"/>
 </form>
 
 <div class="sidenav">
@@ -29,15 +29,15 @@
             <div class="d-xxl-table-cell">
                 <p>@item.SenderName</p>
             </div> 
-                    <div class="d-xxl-table-cell" style="width:78%;text-align:left;">
+                            <div class="d-xxl-table-cell" style="width:80%;text-align:left;">
                 <p>@item.Subject - @item.Message</p>
             </div>
-                    <div class="d-xxl-table-cell">
+                        <div class="d-xxl-table-cell" style="align-self:flex-end;">
                 <form method="post">
                         <button class="btn btn-outline-light" type="submit" asp-action="Delete" asp-route-value="@ViewData["value"]" asp-route-mailId="@item.Id" >Delete</button>
                 </form>
             </div>
-            <div class="d-xxl-table-cell" style="text-align:right;width = 100%;">
+                    <div class="d-xxl-table-cell" style="text-align:right;width:15%;">
                 <p>@item.DateTime_</p>
             </div>      
         </a>         

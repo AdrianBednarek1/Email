@@ -43,7 +43,7 @@ namespace Email.MailRepositoryService
                     x.Sender.Contains(getMails.Filter) ||
                     x.Message.Contains(getMails.Filter) ||
                     x.Subject.Contains(getMails.Filter)))
-                .OrderBy(x => x.DateTime_);
+                .OrderByDescending(x => x.DateTime_);
         }
         private List<Mail> ModelsToEntity(SendMailModel mailModel, List<User> destinations)
         {
