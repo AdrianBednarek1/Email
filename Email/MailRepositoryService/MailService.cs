@@ -37,13 +37,26 @@ namespace Email.MailRepositoryService
         }
         private IQueryable<ListMailModel> FilterMails(IQueryable<ListMailModel> mailsModel, MailFilterModel getMails)
         {
+            if(getMails.Filter is not null) return mailsModel.Where(x => 
+            x.Sender.Contains(getMails.Filter) ||
+            x.Message.Contains(getMails.Filter) ||
+            x.Subject.Contains(getMails.Filter))
+                    .OrderByDescending(x => x.DateTime_);
+
+            if(getMails.EmailCategories_ is not null && getMails.EmailCategories_ != EmailCategories.Primary) 
+                return mailsModel.Where(x =>
+                x.EmailCategory.Equals(getMails.EmailCategories_))
+                    .OrderByDescending(x => x.DateTime_);
+
+            if (getMails.EmailType is not null) return mailsModel.Where(x =>
+            x.EmailType.Equals(getMails.EmailType) &&
+            x.EmailCategory!=EmailCategories.Junk)
+                    .OrderByDescending(x => x.DateTime_);
+
             return mailsModel.Where(x =>
-                    x.EmailCategory.Equals(getMails.EmailCategories_) &&
-                    x.EmailType.Equals(getMails.EmailType) && (
-                    x.Sender.Contains(getMails.Filter) ||
-                    x.Message.Contains(getMails.Filter) ||
-                    x.Subject.Contains(getMails.Filter)))
-                .OrderByDescending(x => x.DateTime_);
+            x.EmailCategory.Equals(EmailCategories.Primary) &&
+            x.EmailType == EmailTypes.Received)
+                    .OrderByDescending(x => x.DateTime_);
         }
         private List<Mail> ModelsToEntity(SendMailModel mailModel, List<User> destinations)
         {
@@ -73,11 +86,18 @@ namespace Email.MailRepositoryService
             };
             return email;
         }
-		public async Task Delete(int mailId)
-		{
+        public async Task Delete(int mailId)
+        {
             Mail mail = await mailRepository.GetMailById(mailId);
-            await mailRepository.DeleteMail(mail);
-		}
+            bool isInJunk = mail.EmailCategory == EmailCategories.Junk;
+            if (isInJunk) 
+            {
+                await mailRepository.DeleteMail(mail);
+                return;
+            }
+            mail.EmailCategory = EmailCategories.Junk;
+            await mailRepository.UpdateMail(mail);
+        }
 
         public async Task UpdateMail(UpdateMail updateMail)
         {

@@ -6,27 +6,14 @@ namespace Email.Models.MailModels
     public class MailFilterModel
     {
         public string EmailAddress { get; set; }
-        private string? filter;
-        public string Filter {
-            get { return filter ?? ""; } 
-            set { filter = value; }
-        }
-        private EmailCategories? emailCategories_;
-        public EmailCategories EmailCategories_ {
-            get { return emailCategories_ ?? EmailCategories.Primary; } 
-            set { emailCategories_ = value; }
-        }
-        private EmailTypes? emailType;
-        public EmailTypes EmailType {
-            get { return emailType ?? EmailTypes.Received; }
-            set { emailType = value; }
-        }
+        public string? Filter { get; set; }
+        public EmailCategories? EmailCategories_ { get; set; }
+        public EmailTypes? EmailType { get; set; }
         public MailFilterModel(){}
         public MailFilterModel(string value, string email)
         {
             EmailAddress = email;
-            bool valueIsNull = value == null;
-            if(valueIsNull) return;
+            if(value is null) return;
             string[] array = value.Split(':').ToArray();
             SetValue(array);
         }
@@ -35,8 +22,8 @@ namespace Email.Models.MailModels
             bool setEmailCategory = array[0].Contains("category");
             bool setEmailType = array[0].Contains("type");
 
-            if (setEmailCategory) EmailCategories_ = (EmailCategories)Enum.Parse(EmailCategories_.GetType(), array[1]);
-            else if (setEmailType) EmailType = (EmailTypes)Enum.Parse(EmailType.GetType(), array[1]);
+            if (setEmailCategory) EmailCategories_ = (EmailCategories)Enum.Parse(typeof(EmailCategories),array[1]);
+            else if (setEmailType) EmailType = (EmailTypes)Enum.Parse(typeof(EmailTypes), array[1]);
             else Filter = array[0];
         }
     }
