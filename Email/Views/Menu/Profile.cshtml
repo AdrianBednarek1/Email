@@ -1,0 +1,30 @@
+﻿@model Email.Models.LoggedModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <label>Email Address: </label>
+            <p>@Model.EmailAddress</p>
+            <label>First Name: </label>
+            <p>@Model.FirstName</p>
+            <label>Last Name: </label>
+            <p>@Model.LastName</p>
+            <label>Phone Number: </label>
+            <p>@Model.PhoneNumber</p>
+            <label>Birth Date: </label>
+            <p>@Model.BirthDate</p>
+        </div>
+        <a asp-action="ChangePassword">Change Password</a>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-outline-dark" asp-action="Index">Back</a>
+</div>
+

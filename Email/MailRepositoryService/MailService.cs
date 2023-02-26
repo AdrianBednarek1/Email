@@ -50,7 +50,7 @@ namespace Email.MailRepositoryService
 
             if (getMails.EmailType is not null) return mailsModel.Where(x =>
             x.EmailType.Equals(getMails.EmailType) &&
-            x.EmailCategory!=EmailCategories.Junk)
+            x.EmailCategory != EmailCategories.Junk)
                     .OrderByDescending(x => x.DateTime_);
 
             return mailsModel.Where(x =>

@@ -37,9 +37,8 @@ namespace Email.Controllers
         {
             if (!ModelState.IsValid) return View();
             ClaimsPrincipal cookies = await userService.Login(loginModel);
-            bool incorrectInput = cookies == null;
-            ViewData["InputValidation"] = incorrectInput ? "Wrong Password or Email" : null;
-            if (incorrectInput) return View();
+            ViewData["InputValidation"] = cookies is null ? "Wrong Password or Email" : null;
+            if (cookies is null) return View();
             await HttpContext.SignInAsync(cookies);
             return Redirect("/Menu/Index");
         }

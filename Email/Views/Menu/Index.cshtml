@@ -27,12 +27,27 @@
     {
         <a class="btn btn-outline-dark" style="height:65px;width:100%;" asp-action="OpenMail" asp-route-mailId="@item.Id">
             <div class="d-xxl-table-cell">
-                <p>@item.SenderName</p>
+                @if(@item.Seen) 
+                {
+                    <p>@item.SenderName</p>
+                }
+                else
+                {
+                    <b>@item.SenderName</b>
+                }
+                
             </div> 
             <div class="d-xxl-table-cell" style="width:80%;text-align:left;">
-                <p>@item.Subject - @item.Message</p>
+                @if(@item.Seen) 
+                {
+                    <p>@item.Subject - @item.Message</p>
+                }
+                else
+                {
+                    <b>@item.Subject - @item.Message</b>
+                }
             </div>
-                        <div class="d-xxl-table-cell" style="align-self:flex-end;">
+            <div class="d-xxl-table-cell" style="align-self:flex-end;">
                 <form method="post">
                         <button class="btn btn-outline-light" type="submit" asp-action="Delete" asp-route-value="@ViewData["value"]" asp-route-mailId="@item.Id" >Delete</button>
                 </form>

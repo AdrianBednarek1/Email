@@ -8,6 +8,8 @@ namespace Email.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string BirthDate { get; set; }
         private string emailAddress;
         public string EmailAddress
         {
@@ -23,6 +25,8 @@ namespace Email.Models
             LastName = user.PersonalInfo.LastName;
             EmailAddress = user.EmailAddress;
             Password = user.Password;
+            BirthDate = user.PersonalInfo.BirthDate;
+            PhoneNumber = user.PersonalInfo.PhoneNumber;
             user.Mails.ForEach(item => Mails.Add(new ListMailModel(item)));
         }
         public LoggedModel() { }

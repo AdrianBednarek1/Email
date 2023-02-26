@@ -12,6 +12,7 @@ namespace Email.Authentication
             claims.Add(new Claim(ClaimTypes.Email, user.EmailAddress));
             claims.Add(new Claim(ClaimTypes.Name, user.PersonalInfo.FirstName));
             claims.Add(new Claim(ClaimTypes.Surname, user.PersonalInfo.LastName));
+            claims.Add(new Claim("Password", user.Password));
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principalClaim = new ClaimsPrincipal(claimsIdentity);
             return principalClaim;

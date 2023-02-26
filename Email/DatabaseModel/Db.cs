@@ -1,5 +1,6 @@
 ﻿using Email.Entity;
 using Microsoft.EntityFrameworkCore;
+using Email.Models;
 
 namespace Email.DatabaseModel
 {
@@ -20,5 +21,6 @@ namespace Email.DatabaseModel
                 .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Person>().HasOne(x => x.UserAccount).WithOne(x=>x.PersonalInfo);
         }
+        public DbSet<Email.Models.LoggedModel> LoggedModel { get; set; } = default!;
     }
 }

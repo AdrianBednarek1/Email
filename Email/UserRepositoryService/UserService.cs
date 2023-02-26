@@ -3,6 +3,7 @@ using Email.Entity;
 using Email.MailRepositoryService;
 using Email.Models;
 using Email.Models.MailModels;
+using Email.Models.UserModels;
 using System.Security.Claims;
 
 namespace Email.UserRepositoryService
@@ -67,6 +68,13 @@ namespace Email.UserRepositoryService
                 if(mailIsNotValid) return false;
             }
             return true;
-        }   
+        }
+
+        public async Task ChangePassword(ChangePassword changePassword)
+        {
+            User user = await userRepository.GetUserByEmail(changePassword.Email);
+            user.Password = changePassword.ConfirmNewPassword;
+            await userRepository.Update(user);
+        }
     }
 }

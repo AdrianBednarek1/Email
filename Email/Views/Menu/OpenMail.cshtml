@@ -1,9 +1,11 @@
 ﻿@using Email.Entity;
 @using Email.Models.MailModels
+@using System.Security.Claims;
 @model MailModel
 @{
     ViewData["Title"] = "OpenMail";
 }
+<a asp-action="Profile">@User?.FindFirst(ClaimTypes.Name)?.Value @User?.FindFirst(ClaimTypes.Surname)?.Value</a>
 <div class="sidenav">
     <a class="btn btn-outline-primary" asp-action="SendMail">Send Mail</a>
     <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Primary">Primary</a>
@@ -14,7 +16,7 @@
     <a class="btn-secondary" asp-action="Index" asp-route-value="category:@EmailCategories.Junk">Junk</a>
     <a class="btn btn-outline-danger" asp-action="SignOut">Sign Out</a>
 </div>
-<div class="form-control" style="width:80%;overflow-wrap: break-word;">
+<div class="form-control" style="width:80%;overflow-wrap: break-word;padding-bottom:200px;">
     <div style="margin:5px;">
         <label>From:</label> 
         @Model.Sender
@@ -24,9 +26,9 @@
         <label>Date:</label> 
         @Model.DateTime_
     </div>
-    <div style="margin:5px;">
+    <div style="margin:5px;margin-bottom:30px;">
         <label>To:</label> 
         @String.Join(",",Model.Receivers)
     </div> 
-    <span style="white-space: pre-line;margin:5px;margin-top:20px;margin-bottom:50px;padding-right:500px">@Model.Message</span>
+    <span style="white-space: pre-line;margin:5px;">@Model.Message</span>
 </div>

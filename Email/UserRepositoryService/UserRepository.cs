@@ -31,7 +31,7 @@ namespace Email.UserRepositoryService
         public async Task Update(User? user)
         {
             var updateItem = await database.Users.FindAsync(user?.Id);
-            if (updateItem == null) return;
+            if (updateItem is null) return;
             database.Users.Entry(updateItem).CurrentValues.SetValues(user);
             await database.SaveChangesAsync();
         }
