@@ -1,5 +1,4 @@
 # Email
-CURRENTLY IN PROCESS...
 
 
  Functionality:
@@ -13,7 +12,5 @@ CURRENTLY IN PROCESS...
  
  4.Group mails by type
  
- 5.Share mail to other people
- 
- 6.Profile view
+ 5.Profile view
  
